@@ -19,25 +19,32 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::post('/account/authenticate',[AccountController::class,'authenticate'])->name('account.authenticate');
-Route::get('/profile',[AccountController::class,'profile'])->name('account.profile');
-Route::get('/logout',[AccountController::class,'logout'])->name('account.logout');
+
+
+
+
 
 Route::group(['account'],function(){
 
+    //Guest routes
     Route::group(['middleware' => 'guest'],function(){
         Route::get('/account/register',[AccountController::class,'registration'])->name('account.register');
         Route::post('/account/process-register',[AccountController::class,'processRegistration'])->name('account.processRegistration');
         Route::get('/account/login',[AccountController::class,'login'])->name('account.login');
+        Route::post('/account/authenticate',[AccountController::class,'authenticate'])->name('account.authenticate');
 
     });
 
     // Authenticated routes
-
-    Route::group(['middleware' => 'guest'],function(){
-        Route::get('/account/register',[AccountController::class,'registration'])->name('account.register');
-        Route::post('/account/process-register',[AccountController::class,'processRegistration'])->name('account.processRegistration');
-        Route::get('/account/login',[AccountController::class,'login'])->name('account.login');
+    Route::group(['middleware' => 'auth'],function(){
+        Route::get('/profile',[AccountController::class,'profile'])->name('account.profile');
+        Route::get('/logout',[AccountController::class,'logout'])->name('account.logout');
         //still 24:17 part 4
     });
 });
+
+
+Route::group(['middeleware' => 'auth'],function(){
+    Route::get('/',[AccountController::class,'index'])->name('home.index');
+});
+

@@ -59,7 +59,8 @@ class AccountController extends Controller
         return view('front.account.login');
     }
 
-    // This method will authenticate the user
+    // This method will authenticate the user  validation ကို ကိုယ်တိုင် စစ်ချင်တဲ့အခါ make($request->all(),[arrays]) |
+    // Rules about which fields should be checked and how. '' => '|'
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -69,7 +70,7 @@ class AccountController extends Controller
 
         if ($validator->passes()) {
 
-            // Auth Session
+            // Auth Session  | Auth::attempt() method က user login လုပ်ရန်အသုံးပြု
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->has('remember'))) {
                 return redirect()->route('account.profile');
             } else {

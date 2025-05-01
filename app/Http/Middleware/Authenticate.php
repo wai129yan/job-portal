@@ -16,6 +16,10 @@ class Authenticate extends Middleware
     {
         if (! $request->expectsJson()) {
             return route('account.login'); // Redirect to the login page
+            //the user who is not register he will be redirected to the login page
+            // If user logged in == NO | And it tries to access login profile page it will redirect to user to
         }
     }
 }
+
+
