@@ -20,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-
-
-
-
 Route::group(['account'],function(){
 
     //Guest routes
@@ -38,13 +34,14 @@ Route::group(['account'],function(){
     // Authenticated routes
     Route::group(['middleware' => 'auth'],function(){
         Route::get('/profile',[AccountController::class,'profile'])->name('account.profile');
+        Route::put('/update-profile',[AccountController::class,'updateProfile'])->name('account.updateProfile');
         Route::get('/logout',[AccountController::class,'logout'])->name('account.logout');
         //still 24:17 part 4
     });
 });
 
 
-Route::group(['middeleware' => 'auth'],function(){
-    Route::get('/',[AccountController::class,'index'])->name('home.index');
-});
+// Route::group(['middeleware' => 'auth'],function(){
+//     Route::get('/',[AccountController::class,'index'])->name('home.index');
+// });
 
